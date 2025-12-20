@@ -55,6 +55,8 @@ const im = {
   _id: "57231f1a30e4351f4e9f4bd7",
   first_name: "Ian",
   last_name: "Malcolm",
+  username: "chaostheory",
+  password: "password",
   location: "Austin, TX",
   description: "Should've stayed in the car.",
   occupation: "Mathematician",
@@ -63,6 +65,8 @@ const er = {
   _id: "57231f1a30e4351f4e9f4bd8",
   first_name: "Ellen",
   last_name: "Ripley",
+  username: "ripley",
+  password: "password",
   location: "Nostromo",
   description: "Lvl 6 rating. Pilot.",
   occupation: "Warrant Officer",
@@ -71,6 +75,8 @@ const pt = {
   _id: "57231f1a30e4351f4e9f4bd9",
   first_name: "Peregrin",
   last_name: "Took",
+  username: "peregrin",
+  password: "password",
   location: "Gondor",
   description:
     "Home is behind, the world ahead... " +
@@ -83,6 +89,8 @@ const rk = {
   _id: "57231f1a30e4351f4e9f4bda",
   first_name: "Rey",
   last_name: "Kenobi",
+  username: "reykenobi",
+  password: "password",
   location: "D'Qar",
   description: "Excited to be here!",
   occupation: "Rebel",
@@ -91,6 +99,8 @@ const al = {
   _id: "57231f1a30e4351f4e9f4bdb",
   first_name: "April",
   last_name: "Ludgate",
+  username: "april",
+  password: "password",
   location: "Pawnee, IN",
   description: "Witch",
   occupation: "Animal Control",
@@ -99,12 +109,25 @@ const jo = {
   _id: "57231f1a30e4351f4e9f4bdc",
   first_name: "John",
   last_name: "Ousterhout",
+  username: "ousterhout",
+  password: "password",
   location: "Stanford, CA",
   description: "<i>CS142!</i>",
   occupation: "Professor",
 };
 
-const users = [im, er, pt, rk, al, jo];
+const hva = {
+  _id: "57d31f1a30e4351f4e9f4bac",
+  first_name: "Hoang",
+  last_name: "Viet Anh",
+  username: "vietanh",
+  password: "vietanh",
+  location: "Stanford, CA",
+  description: "PTIT",
+  occupation: "Professor",
+}
+
+const users = [im, er, pt, rk, al, jo, hva];
 
 // Create initial photos.
 const photo1 = {
