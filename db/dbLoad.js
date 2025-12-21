@@ -32,6 +32,8 @@ async function dbLoad() {
       id: user._id,
       first_name: user.first_name,
       last_name: user.last_name,
+      username: user.username,
+      password: user.password,
       location: user.location,
       description: user.description,
       occupation: user.occupation,
