@@ -17,10 +17,14 @@ app.use(session({
   secret: "Vietanh204@",
   resave: false,
   saveUninitialized: true,
+  credentials: true,
   cookie: { secure: false }
 }))
 
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:3000",
+  credentials: true
+}));
 app.use(express.json());
 app.use("/api/user", UserRouter);
 app.use("/api/photo", PhotoRouter);
