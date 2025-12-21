@@ -14,7 +14,7 @@ router.post("/login", async (request, response) => {
                 return response.status(401).json({message: "Invalid username or password."});
             }else{
                 request.session.user = {username: user.username, id: user._id};
-                return response.status(200).json({status: 200 , message: "Login successful.", user: {username:user.username, id: user._id}});
+                return response.status(200).json({status: 200 , message: "Login successful.", user: {username:user.username, id: user._id, first_name: user.first_name, last_name: user.last_name}});
             }
         }catch (error) {
             console.error("Error logging in user:", error);

@@ -8,6 +8,7 @@ const PhotoRouter = require("./routes/PhotoRouter");
 const RegisterRouter = require("./routes/RegisterRouter");
 const LoginRouter = require("./routes/LoginRouter");
 const Photo = require("./db/photoModel");
+const UploadFileRouter = require("./routes/UpoadFileRouter");
 // const CommentRouter = require("./routes/CommentRouter");
 
 dbConnect();
@@ -30,6 +31,7 @@ app.use("/api/user", UserRouter);
 app.use("/api/photo", PhotoRouter);
 app.use("/admin", RegisterRouter);
 app.use("/admin", LoginRouter);
+app.use("/api/upload", UploadFileRouter);
 
 app.get("/", (request, response) => {
   response.send({ message: "Hello from photo-sharing app API!" });
