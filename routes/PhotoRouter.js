@@ -1,7 +1,7 @@
 const express = require("express");
 const Photo = require("../db/photoModel");
 const router = express.Router();
-
+const requireAuth = require("./UpoadFileRouter").requireAuth;
 router.post("/", async (request, response) => {
   
 });
@@ -31,5 +31,31 @@ router.get("/:id", async (request, response) => {
         console.error("Error retrieving photos by user ID:", error);
     }
 });
+
+router.delete("/:id", async (request, response) => {
+    try {
+        const result = await Photo.findByIdAndDelete(request.params.id);
+        response.status(200).json({message: "Photo deleted successfully."});
+    }catch (error) {
+        console.error("Error deleting photo by ID:", error);
+    }
+})
+
+// router.delete("/:idphoto/:idcomment" , async (request, response) => {
+//     try {
+//         const photo = Photo.findById(request.params.idphoto);
+//         const comment = photo.comments.id(request.params.idcomment);
+//         if (!comment) {
+//             return response.status(404).json({
+//                 message: "Comment not found."
+//             });
+//         }
+//         comment.remove();
+//         await photo.save();
+//         response.status(200).json({message: "Comment deleted successfully."});
+//     }catch (error) {
+//         console.error("Error deleting photo by ID:", error);
+//     }
+// })
 
 module.exports = router;

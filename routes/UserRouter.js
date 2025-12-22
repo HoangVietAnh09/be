@@ -27,10 +27,26 @@ router.get("/:id", async (request, response) => {
 router.delete("/:id", async (request, response) => {
     try {
         const result = await User.findByIdAndDelete(request.params.id);
-        response.status(200).json({message: "User deleted successfully."});
+        response.status(200).json({status: 200, message: "User deleted successfully."});
     }catch (error) {
 
     }
+})
+
+router.put("/:id", async (request, response) => {
+    try {
+        const updateUser = await User.findByIdAndUpdate(request.params.id, request.body, { new: true });
+        response.status(200).json({status: 200, updateUser: updateUser});
+    }catch (error) {
+        console.error("Error updating user:", error);
+    }
+
+    // try {
+    //     const updatedUser = await User.findByIdAndUpdate(request.params.id, request.body, { new: true });
+    //     response.status(200).json(updatedUser);
+    // }catch (error) {
+    //     console.error("Error updating user:", error);
+    // }
 })
 
 module.exports = router;
