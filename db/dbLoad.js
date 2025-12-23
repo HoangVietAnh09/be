@@ -11,7 +11,8 @@ const versionString = "1.0";
 
 async function dbLoad() {
   try {
-    await mongoose.connect(process.env.DB_URL);
+    // await mongoose.connect(process.env.DB_URL);
+    await  mongoose.connect("mongodb+srv://vietanh092004_db_user:Vietanh123@cluster0.lflo7er.mongodb.net/photo_share?appName=Cluster0")
     console.log("Successfully connected to MongoDB Atlas!");
   } catch (error) {
     console.error(error);

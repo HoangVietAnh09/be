@@ -37,6 +37,32 @@ app.get("/", (request, response) => {
   response.send({ message: "Hello from photo-sharing app API!" });
 });
 
+app.delete("/commentsOfPhoto/:idphoto/:idcomment", async (request, response) => {
+    const photoId = request.params.idphoto;
+    console.log("Photo ID:", photoId);
+    console.log("Comment ID:", request.params.idcomment);
+    const commentId = request.params.idcomment;
+    try {
+        const photo = await Photo.findById(photoId);
+        if(photo){
+            const comment = photo.comments.id(commentId);
+            console.log("Comment to delete:", comment);
+            if(comment){
+                photo.comments.pull(commentId);
+                await photo.save();
+                response.status(200).json({status: 200, message: "Comment deleted successfully."});
+            }else{
+              response.status(404).json({status: 404, message: "Comment not found."});
+            }
+        }else{
+          response.status(404).json({status: 404, message: "Photo not found."});
+        }
+    }catch (error) {
+        console.error("Error deleting comment by ID:", error);
+        response.status(500).json({status: 500, message: "Internal server error."});
+    }
+})
+
 app.post("/commentsOfPhoto/:photo_id", async (request, response) => {
   const photo_id = request.params.photo_id;
   const comment = request.body.comment;

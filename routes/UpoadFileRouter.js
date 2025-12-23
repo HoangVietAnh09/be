@@ -83,6 +83,7 @@ router.post('/photos/new', requireAuth, upload.single('photo'), async (req, res)
     console.log('Photo saved:', newPhoto);
     
     return res.status(200).json({
+      status: 200,
       message: 'Photo uploaded successfully',
       data: {
         _id: newPhoto._id,
@@ -107,46 +108,46 @@ router.post('/photos/new', requireAuth, upload.single('photo'), async (req, res)
 });
 
 
-router.delete('/photos/:photo_id', requireAuth, async (req, res) => {
-  try {
-    const photo_id = req.params.photo_id;
-    const user = req.session.user;
+// router.delete('/photos/:photo_id', requireAuth, async (req, res) => {
+//   try {
+//     const photo_id = req.params.photo_id;
+//     const user = req.session.user;
     
-    const photo = await Photo.findById(photo_id);
+//     const photo = await Photo.findById(photo_id);
     
-    if (!photo) {
-      return res.status(404).json({
-        message: 'Photo not found'
-      });
-    }
+//     if (!photo) {
+//       return res.status(404).json({
+//         message: 'Photo not found'
+//       });
+//     }
     
-    if (photo.user_id.toString() !== user.id.toString()) {
-      return res.status(403).json({
-        message: 'You can only delete your own photos'
-      });
-    }
-    const uploadDir = './../photo-sharing-v1/public/images';
+//     if (photo.user_id.toString() !== user.id.toString()) {
+//       return res.status(403).json({
+//         message: 'You can only delete your own photos'
+//       });
+//     }
+//     const uploadDir = './../photo-sharing-v1/public/images';
 
-    const filePath = path.join(uploadDir, photo.file_name);
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-    }
+//     const filePath = path.join(uploadDir, photo.file_name);
+//     if (fs.existsSync(filePath)) {
+//       fs.unlinkSync(filePath);
+//     }
     
-    await Photo.findByIdAndDelete(photo_id);
+//     await Photo.findByIdAndDelete(photo_id);
     
     
-    return res.status(200).json({
-      message: 'Photo deleted successfully'
-    });
+//     return res.status(200).json({
+//       message: 'Photo deleted successfully'
+//     });
     
-  } catch (error) {
-    console.error('Delete error:', error);
-    return res.status(500).json({
-      message: 'Internal server error',
-      error: error.message
-    });
-  }
-});
+//   } catch (error) {
+//     console.error('Delete error:', error);
+//     return res.status(500).json({
+//       message: 'Internal server error',
+//       error: error.message
+//     });
+//   }
+// });
 
 router.use('/images', express.static('images'));
 
