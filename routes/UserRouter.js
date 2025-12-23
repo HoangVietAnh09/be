@@ -2,8 +2,18 @@ const express = require("express");
 const User = require("../db/userModel");
 const router = express.Router();
 
-router.post("/", async (request, response) => {
-  
+router.post("/logout", async (request, response) => {
+    if(!request.session){
+        return response.status(200).json({status: 200, message: 'No session to destroy'})
+    }
+    
+    request.session.destroy((err) => {
+        if(err){
+            return response.status(500).json({ status: 500, message: "Error logging out" });
+        }
+        response.clearCookie('connect.sid');
+        return response.status(200).json({ message: "Logged out successfully" });
+    })
 });
 
 router.get("/list", async (request, response) => {
@@ -23,6 +33,15 @@ router.get("/:id", async (request, response) => {
         console.error("Error retrieving user by ID:", error);
     }
 })
+
+
+// router.get("/:name", async (request, response) => {
+//     try {
+//         const user = await User.findBy
+//     }catch (error){
+//         console.error(error)
+//     }
+// })
 
 router.delete("/:id", async (request, response) => {
     try {
