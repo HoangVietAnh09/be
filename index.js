@@ -82,6 +82,26 @@ app.put("/updateComment/:idphoto/:idcomment", async (request, response) => {
 
 })
 
+app.get("/commentsOfPhoto/:photoId/:commentId", async (request, response) => {
+  const photoId = request.params.photoId;
+  const commentId = request.params.commentId;
+  console.log(photoId)
+  console.log(commentId)
+  try {
+    const photo = await Photo.findById(photoId);
+    if(!photo){
+      return response.status(404).json({status: 404, message: "Invalid photo"})
+    }else{
+      const comment = photo.comments.id(commentId);
+      return response.status(200).json({status: 200, comment: comment})
+    }
+
+  }catch(error){
+    return response.status(500).json({status: 500, message: "Internal error"})
+  }
+
+})
+
 app.post("/commentsOfPhoto/:photo_id", async (request, response) => {
   const photo_id = request.params.photo_id;
   const comment = request.body.comment;

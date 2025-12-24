@@ -72,4 +72,20 @@ router.put("/:id", async (request, response) => {
     // }
 })
 
+router.get("/getbyname/:first_name", async (request, response) => {
+    const first_name = request.params.first_name;
+    try {
+        const user = await User.findOne({first_name: first_name})
+        console.log(user)
+        if(!user){
+            return response.status(404).json({status: 404, message: "User does not exits"})
+        }else{
+            return response.status(200).json({status: 200, user: user})
+        }
+        
+    }catch(err){
+        return response.status(500).json({status: 500, message: "Internal Error"})
+    }
+})
+
 module.exports = router;

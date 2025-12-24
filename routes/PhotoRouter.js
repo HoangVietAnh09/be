@@ -2,8 +2,26 @@ const express = require("express");
 const Photo = require("../db/photoModel");
 const router = express.Router();
 const requireAuth = require("./UpoadFileRouter").requireAuth;
-router.post("/", async (request, response) => {
-  
+router.post("/:photoId/like", async (request, response) => {
+    const photoId = request.params.photoId;
+    const userId = request.body.userId;
+    console.log(userId)
+    console.log(photoId)
+
+    try {
+        const photo = await Photo.findById(photoId)
+        console.log(photo)
+        const liked = photo.likes.includes(userId)
+        if(liked){
+            photo.likes.pull(userId)
+        }else{
+            photo.likes.push(userId)
+        }
+        await photo.save();
+        return response.status(200).json({status: 200, liked: !liked, likeCount: photo.likes.length});
+    }catch(err){
+        return response.status(500).json({status: 500, message: 'Internal Error'})
+    }
 });
 
 router.get("/:id", async (request, response) => {
