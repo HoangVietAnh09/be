@@ -54,7 +54,11 @@ router.delete("/:id", async (request, response) => {
 
 router.put("/:id", async (request, response) => {
     try {
-        const updateUser = await User.findByIdAndUpdate(request.params.id, request.body, { new: true });
+        const updates = Object.fromEntries(
+            Object.entries(request.body).filter(([k, v]) => (v != null && v !== ""))
+        );        
+        console.log(updates);
+        const updateUser = await User.findByIdAndUpdate(request.params.id, updates, { new: true });
         response.status(200).json({status: 200, updateUser: updateUser});
     }catch (error) {
         console.error("Error updating user:", error);

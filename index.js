@@ -63,6 +63,25 @@ app.delete("/commentsOfPhoto/:idphoto/:idcomment", async (request, response) => 
     }
 })
 
+app.put("/updateComment/:idphoto/:idcomment", async (request, response) => {
+  const photoId = request.params.idphoto;
+  const commentId = request.params.idcomment;
+  try {
+    const photo = await Photo.findById(photoId);
+    const comment = photo.comments.id(commentId);
+    console.log(comment)
+    comment.comment = request.body.comment
+    console.log(comment.comment)
+    comment.date_time = new Date();
+    await photo.save()
+
+    return response.status(200).json({status: 200,comment: comment});
+  }catch(error){
+    return response.status(500).json({status: 500, message: 'Internal Error'})
+  }
+
+})
+
 app.post("/commentsOfPhoto/:photo_id", async (request, response) => {
   const photo_id = request.params.photo_id;
   const comment = request.body.comment;
