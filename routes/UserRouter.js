@@ -16,6 +16,25 @@ router.post("/logout", async (request, response) => {
     })
 });
 
+router.get("/addfriend/:userId/:friendId", async (request, response) => {
+    const userId = request.params.userId;
+    const friendId = request.params.friendId;
+
+    try {
+        const user = await User.findById(userId);
+        const friend = user.friend.includes(friendId);
+        if(friend){
+            user.friend.pull(friendId)
+        }else{
+            user.friend.push(friendId)
+        }
+        await user.save();
+        return response.status(200).json({status: 200, friend: !friend, friendCount: user.friend.length})
+    } catch(err){
+        return response.status(500).json({status: 500, message: "Internal Error"})
+    }
+})
+
 router.get("/list", async (request, response) => {
     try {
         const users = await User.find();
